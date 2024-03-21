@@ -1,3 +1,11 @@
+# Ste CI
+
+Build status below
+
+![steci](https://github.com/StefanoBelli/bookkeeper/actions/workflows/ste-ci.yml/badge.svg)
+
+# Apache original README.md
+
 <img src="https://pbs.twimg.com/profile_images/545716709311520769/piLLa1iC_400x400.png" alt="logo" style="width: 32px;"/>
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.bookkeeper/bookkeeper/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.bookkeeper/bookkeeper)
