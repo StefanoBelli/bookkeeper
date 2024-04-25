@@ -4,6 +4,15 @@ Build status below
 
 ![steci](https://github.com/StefanoBelli/bookkeeper/actions/workflows/ste-ci.yml/badge.svg)
 
+## Tested classes
+
+BaseDir=``./bookkeeper-server/src/main/java``
+
+ * ``org.apache.bookkeeper.bookie.BufferedChannel``
+ * ``org.apache.bookkeeper.bookie.LedgerDescriptor``
+ * ``org.apache.bookkeeper.bookie.storage.ldb.ReadCache``
+ * ``org.apache.bookkeeper.bookie.storage.ldb.WriteCache``
+
 # Apache original README.md
 
 <img src="https://pbs.twimg.com/profile_images/545716709311520769/piLLa1iC_400x400.png" alt="logo" style="width: 32px;"/>
