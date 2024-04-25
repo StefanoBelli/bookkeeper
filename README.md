@@ -12,6 +12,8 @@ BaseDir=``./bookkeeper-server/src/main/java``
  * ``org.apache.bookkeeper.bookie.LedgerDescriptor``
  * ``org.apache.bookkeeper.bookie.storage.ldb.ReadCache``
  * ``org.apache.bookkeeper.bookie.storage.ldb.WriteCache``
+ * ``org.apache.bookkeeper.bookie.EntryLogMetadata``
+ * ``org.apache.bookkeeper.proto.checksum.DigestManager``
 
 # Apache original README.md
 
