@@ -30,6 +30,10 @@ jobs:
       run: bash genbaduareports.sh
     - name: Copy ba-dua report
       run: bash aggacreports.sh
+    - uses: actions/upload-artifact@v4
+      with:
+        name: adequacy-reports
+        path: ac-reports/
   windows:
     runs-on: windows-latest
     steps:
