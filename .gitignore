@@ -51,3 +51,4 @@ build/
 *.dat
 
 coverage.ser
+dataflow.xml

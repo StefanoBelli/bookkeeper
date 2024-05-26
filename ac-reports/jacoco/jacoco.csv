@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Apache BookKeeper :: Common :: Allocator,org.apache.bookkeeper.common.allocator.impl,ByteBufAllocatorBuilderImpl,15,65,0,0,6,17,3,6,3,6
+Apache BookKeeper :: Common :: Allocator,org.apache.bookkeeper.common.allocator.impl,ByteBufAllocatorImpl,72,148,10,23,26,39,10,19,2,9
+Apache BookKeeper :: Common :: Allocator,org.apache.bookkeeper.common.allocator,OutOfMemoryPolicy,0,15,0,0,0,3,0,1,0,1
+Apache BookKeeper :: Common :: Allocator,org.apache.bookkeeper.common.allocator,PoolingPolicy,0,15,0,0,0,3,0,1,0,1
+Apache BookKeeper :: Common :: Allocator,org.apache.bookkeeper.common.allocator,LeakDetectionPolicy,34,30,4,0,7,5,3,1,1,1
+Apache BookKeeper :: Common :: Allocator,org.apache.bookkeeper.common.allocator,ByteBufAllocatorBuilder,0,4,0,0,0,1,0,1,0,1
