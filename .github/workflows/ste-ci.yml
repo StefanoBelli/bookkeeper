@@ -53,4 +53,3 @@ jobs:
       run: mvn -P adequacy-dataflow clean test
     - name: Build, test and determine mutation score
       run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
-
