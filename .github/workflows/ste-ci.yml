@@ -20,15 +20,15 @@ jobs:
       run: mvn -P adequacy-controlflow jacoco:report
     - name: Copy JaCoCo report
       run: bash aggacreports.sh
+    - name: Build, test and determine mutation score
+      run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
+    - name: Copy PIT report
+      run: bash aggacreports.sh
     - name: Build, test and determine data flow coverage
       run: mvn -P adequacy-dataflow clean test
     - name: Generate ba-dua report
       run: bash genbaduareports.sh
     - name: Copy ba-dua report
-      run: bash aggacreports.sh
-    - name: Build, test and determine mutation score
-      run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
-    - name: Copy PIT report
       run: bash aggacreports.sh
   windows:
     runs-on: windows-latest
