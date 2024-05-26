@@ -204,12 +204,11 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-    <dependency>
-       <!-- needed by ZooKeeper server tests utilities -->
+    <!-- <dependency>
        <groupId>org.junit.jupiter</groupId>
        <artifactId>junit-jupiter-api</artifactId>
        <scope>test</scope>
-    </dependency>
+    </dependency> -->
     <dependency>
       <groupId>org.apache.bookkeeper.stats</groupId>
       <artifactId>prometheus-metrics-provider</artifactId>
@@ -228,11 +227,11 @@
       <version>${project.parent.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
       <scope>test</scope>
-    </dependency>
+    </dependency>-->
   </dependencies>
   <build>
     <plugins>

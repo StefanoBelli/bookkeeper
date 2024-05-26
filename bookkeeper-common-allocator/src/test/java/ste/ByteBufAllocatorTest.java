@@ -4,13 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Collection;
+import java.util.Arrays;
 
 import org.apache.bookkeeper.common.allocator.ByteBufAllocatorBuilder;
 import org.apache.bookkeeper.common.allocator.LeakDetectionPolicy;
 import org.apache.bookkeeper.common.allocator.OutOfMemoryPolicy;
 import org.apache.bookkeeper.common.allocator.PoolingPolicy;
-import org.assertj.core.util.Arrays;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -18,6 +17,8 @@ import org.junit.runners.Parameterized.Parameters;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 @RunWith(Parameterized.class)
 public class ByteBufAllocatorTest {
@@ -32,7 +33,7 @@ public class ByteBufAllocatorTest {
 
     private static class GetBuffer implements GetByteBuf {
         private ByteBufAllocator allocator;
-        
+
         public void alloc(ByteBufAllocator allocator) {
             this.allocator = allocator;
         }
@@ -51,9 +52,9 @@ public class ByteBufAllocatorTest {
         public ByteBuf buf(int minCap, int maxCap) {
             return allocator.buffer(minCap, maxCap);
         }
-        
+
     }
-    
+
     private static class GetIoBuffer implements GetByteBuf {
         private ByteBufAllocator allocator;
 
@@ -76,9 +77,9 @@ public class ByteBufAllocatorTest {
         public void alloc(ByteBufAllocator allocator) {
             this.allocator = allocator;
         }
-        
-    }   
- 
+
+    }
+
     private static class GetHeapBuffer implements GetByteBuf {
 
         private ByteBufAllocator allocator;
@@ -102,9 +103,9 @@ public class ByteBufAllocatorTest {
         public void alloc(ByteBufAllocator allocator) {
             this.allocator = allocator;
         }
-        
+
     }
-  
+
     private static class GetDirectBuffer implements GetByteBuf {
         private ByteBufAllocator allocator;
 
@@ -122,19 +123,19 @@ public class ByteBufAllocatorTest {
         public ByteBuf buf(int minCap, int maxCap) {
             return allocator.directBuffer(minCap, maxCap);
         }
-        
+
         @Override
         public void alloc(ByteBufAllocator allocator) {
             this.allocator = allocator;
         }
-    }  
+    }
 
     public ByteBufAllocatorTest(LeakDetectionPolicy l, OutOfMemoryPolicy o, PoolingPolicy p, GetByteBuf getByteBuf) {
         ByteBufAllocatorBuilder builder = ByteBufAllocatorBuilder.create();
         builder
-            .leakDetectionPolicy(l)
-            .outOfMemoryPolicy(o)
-            .poolingPolicy(p);
+                .leakDetectionPolicy(l)
+                .outOfMemoryPolicy(o)
+                .poolingPolicy(p);
         this.getByteBuf = getByteBuf;
         this.getByteBuf.alloc(builder.build());
         this.basicBuf = getByteBuf.buf();
@@ -145,70 +146,70 @@ public class ByteBufAllocatorTest {
     @Parameters
     public static Collection params() {
         return Arrays.asList(new Object[][] {
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetIoBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetIoBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetIoBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetIoBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetIoBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetIoBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetIoBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetIoBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
-            { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetIoBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetIoBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetIoBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetIoBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetIoBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetIoBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetIoBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetIoBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetIoBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetDirectBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.PooledDirect, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.ThrowException, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Disabled, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Simple, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Advanced, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
+                { LeakDetectionPolicy.Paranoid, OutOfMemoryPolicy.FallbackToHeap, PoolingPolicy.UnpooledHeap, new GetHeapBuffer() },
         });
     }
 
@@ -224,7 +225,7 @@ public class ByteBufAllocatorTest {
         assertEquals(Integer.MAX_VALUE, basicMinSizedBuf.maxCapacity());
         assertEquals(Integer.MAX_VALUE, basicBuf.maxCapacity());
         assertEquals(300, basicMinSizedMaxCapBuf.maxCapacity());
-        
+
         assertEquals(false, basicBuf.isReadable());
         assertEquals(false, basicMinSizedBuf.isReadable());
         assertEquals(false, basicMinSizedMaxCapBuf.isReadable());
@@ -248,7 +249,7 @@ public class ByteBufAllocatorTest {
         basicBuf.clear();
         basicMinSizedBuf.clear();
         basicMinSizedMaxCapBuf.clear();
-        
+
         assertEquals(false, basicBuf.isReadable());
         assertEquals(false, basicMinSizedBuf.isReadable());
         assertEquals(false, basicMinSizedMaxCapBuf.isReadable());
@@ -267,7 +268,7 @@ public class ByteBufAllocatorTest {
         assertEquals(false, roBuf.isReadable());
         assertEquals(false, roMinSizedBuf.isReadable());
         assertEquals(false, roMinSizedMaxCapBuf.isReadable());
-        
+
         assertEquals(true, roBuf.isReadOnly());
         assertEquals(true, roMinSizedBuf.isReadOnly());
         assertEquals(true, roMinSizedMaxCapBuf.isReadOnly());
@@ -278,12 +279,12 @@ public class ByteBufAllocatorTest {
         assertThrows(Throwable.class, () -> checkWrites(roMinSizedMaxCapBuf, 100));
         assertThrows(Throwable.class, () -> checkWrites(roMinSizedMaxCapBuf, 101));
     }
-    
+
     @Test
     public void testRoBufsReads() {
         basicBuf.clear();
         basicMinSizedBuf.clear();
-        
+
         assertEquals(false, basicBuf.isReadable());
         assertEquals(false, basicMinSizedBuf.isReadable());
 
@@ -304,7 +305,7 @@ public class ByteBufAllocatorTest {
 
         basicBuf.clear();
         basicMinSizedBuf.clear();
-        
+
         assertEquals(false, basicBuf.isReadable());
         assertEquals(false, basicMinSizedBuf.isReadable());
     }
@@ -315,7 +316,7 @@ public class ByteBufAllocatorTest {
             buf.writeByte((byte) i);
             ++i;
         }
-        
+
         i = 1;
         while(i <= maxWrites) {
             if((byte) i != buf.readByte()) {
