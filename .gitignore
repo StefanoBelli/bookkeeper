@@ -52,3 +52,4 @@ build/
 
 coverage.ser
 dataflow.xml
+ac-reports/
