@@ -16,6 +16,10 @@ jobs:
         distribution: 'temurin'
     - name: Build, test and determine control flow coverage
       run: mvn -P adequacy-controlflow clean test
+    - name: Build, test and determine data flow coverage
+      run: mvn -P adequacy-dataflow clean test
+    - name: Build, test and determine mutation score
+      run: mvn -P adequacy-mutation clean test
   windows:
     runs-on: windows-latest
     steps:
@@ -27,4 +31,8 @@ jobs:
         distribution: 'temurin'
     - name: Build, test and determine control flow coverage
       run: mvn -P adequacy-controlflow clean test
+    - name: Build, test and determine data flow coverage
+      run: mvn -P adequacy-dataflow clean test
+    - name: Build, test and determine mutation score
+      run: mvn -P adequacy-mutation clean test
 
