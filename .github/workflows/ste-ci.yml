@@ -2,6 +2,10 @@ name: Ste's Apache BookKeeper CI
 
 on: [push]
 
+env:
+    TESTED_SUBPROJECT: bookkeeper-common-allocator
+    BA_DUA_CLASSES: org/apache/bookkeeper/common/allocator
+
 jobs:
   linux:
     runs-on: ubuntu-latest
@@ -17,19 +21,19 @@ jobs:
     - name: Build, test and determine control flow coverage
       run: mvn -P adequacy-controlflow clean test
     - name: Generate JaCoCo report
-      run: mvn -P adequacy-controlflow jacoco:report
+      run: bash ste-ci-scripts/genjacocoreports.sh
     - name: Copy JaCoCo report
-      run: bash aggacreports.sh
+      run: bash ste-ci-scripts/aggacreports.sh
     - name: Build, test and determine mutation score
       run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
     - name: Copy PIT report
-      run: bash aggacreports.sh
+      run: bash ste-ci-scripts/aggacreports.sh
     - name: Build, test and determine data flow coverage
       run: mvn -P adequacy-dataflow clean test
     - name: Generate ba-dua report
-      run: bash genbaduareports.sh
+      run: bash ste-ci-scripts/genbaduareports.sh
     - name: Copy ba-dua report
-      run: bash aggacreports.sh
+      run: bash ste-ci-scripts/aggacreports.sh
     - uses: actions/upload-artifact@v4
       with:
         name: adequacy-reports
