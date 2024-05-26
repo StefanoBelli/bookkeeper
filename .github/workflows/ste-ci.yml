@@ -4,7 +4,6 @@ on: [push]
 
 env:
     TESTED_SUBPROJECT: bookkeeper-common-allocator
-    BA_DUA_CLASSES: org/apache/bookkeeper/common/allocator
 
 jobs:
   linux:
