@@ -49,3 +49,5 @@ build/
 .gradle/
 *.log
 *.dat
+
+coverage.ser
