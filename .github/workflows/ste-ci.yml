@@ -19,7 +19,7 @@ jobs:
     - name: Build, test and determine data flow coverage
       run: mvn -P adequacy-dataflow clean test
     - name: Build, test and determine mutation score
-      run: mvn -P adequacy-mutation clean test
+      run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
   windows:
     runs-on: windows-latest
     steps:
@@ -34,5 +34,5 @@ jobs:
     - name: Build, test and determine data flow coverage
       run: mvn -P adequacy-dataflow clean test
     - name: Build, test and determine mutation score
-      run: mvn -P adequacy-mutation clean test
+      run: mvn -P adequacy-mutation clean test org.pitest:pitest-maven:mutationCoverage
 
