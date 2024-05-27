@@ -3,7 +3,7 @@ name: Ste's Apache BookKeeper CI
 on: [push]
 
 env:
-    TESTED_SUBPROJECT: bookkeeper-common-allocator
+    TESTED_SUBPROJECT: bookkeeper-server
 
 jobs:
   linux:
