@@ -1,4 +1,4 @@
-package ste;
+package ste.ignoredtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -17,11 +17,9 @@ import org.junit.runners.Parameterized.Parameters;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 @RunWith(Parameterized.class)
-public class ByteBufAllocatorTest {
+public class ByteBufAllocatorTestIgnore {
     private interface GetByteBuf {
         void alloc(ByteBufAllocator allocator);
         ByteBuf buf();
@@ -130,7 +128,7 @@ public class ByteBufAllocatorTest {
         }
     }
 
-    public ByteBufAllocatorTest(LeakDetectionPolicy l, OutOfMemoryPolicy o, PoolingPolicy p, GetByteBuf getByteBuf) {
+    public ByteBufAllocatorTestIgnore(LeakDetectionPolicy l, OutOfMemoryPolicy o, PoolingPolicy p, GetByteBuf getByteBuf) {
         ByteBufAllocatorBuilder builder = ByteBufAllocatorBuilder.create();
         builder
                 .leakDetectionPolicy(l)

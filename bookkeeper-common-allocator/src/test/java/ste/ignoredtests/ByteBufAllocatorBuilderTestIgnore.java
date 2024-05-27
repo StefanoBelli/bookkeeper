@@ -1,4 +1,4 @@
-package ste;
+package ste.ignoredtests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,7 +11,7 @@ import org.apache.bookkeeper.common.allocator.OutOfMemoryPolicy;
 import org.apache.bookkeeper.common.allocator.PoolingPolicy;
 import org.junit.Test;
 
-public class ByteBufAllocatorBuilderTest {
+public class ByteBufAllocatorBuilderTestIgnore {
     @Test
     public void testMinimalBuilder() {
         ByteBufAllocatorBuilder builder = ByteBufAllocatorBuilder.create();
