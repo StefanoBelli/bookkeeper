@@ -10,6 +10,7 @@ BaseDir=``./bookkeeper-server/src/main/java``
 
  * ``org.apache.bookkeeper.bookie.BufferedChannel``
  * ``org.apache.bookkeeper.bookie.FileInfo``
+ * ``org.apache.bookkeeper.client.RoundRobinDistributionSchedule``
 
 # Apache original README.md
 
