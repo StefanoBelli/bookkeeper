@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -97,12 +99,50 @@ public class BufferedChannelTest {
     }
 
     @Test
-    public void testWriteReadForceFlush() {
+    public void testWriteReadForceFlush() throws IOException {
+        byte[] myBytes = "somebytes".getBytes();
 
+        ByteBuf buf = getBuffer();
+        buf.writeBytes(myBytes);
+
+        bufferedChannel.write(buf);
+
+        RefWrapper<byte[]> wroteRef = new RefWrapper<>();
+
+        Mockito
+                .when(fileChannel.write(Mockito.any(ByteBuffer.class)))
+                .thenAnswer(
+                        invoc -> {
+                            ByteBuffer localBuf = invoc.getArgument(0, ByteBuffer.class);
+                            int rem = localBuf.remaining();
+                            byte[] dstLocalBuf = new byte[rem];
+                            localBuf.get(dstLocalBuf, localBuf.position(), rem);
+                            wroteRef.set(dstLocalBuf);
+                            return rem;
+                        });
+
+        Mockito
+                .when(fileChannel.position())
+                        .thenAnswer(unused -> (long) wroteRef.get().length);
+
+        bufferedChannel.flushAndForceWrite(true);
+
+        byte[] flushedBytes = wroteRef.get();
+
+        assertEquals(0, bufferedChannel.getNumOfBytesInWriteBuffer());
+
+        assertEquals(flushedBytes.length, bufferedChannel.position());
+
+        assertEquals(flushedBytes.length, bufferedChannel.getFileChannelPosition());
     }
 
     @Test
     public void testWriteReadExceedBufferCapacity() {
+
+    }
+
+    @Test
+    public void testClearBuf() {
 
     }
 
@@ -114,5 +154,17 @@ public class BufferedChannelTest {
 
     private static ByteBuf getBuffer() {
         return ByteBufAllocator.DEFAULT.buffer();
+    }
+}
+
+class RefWrapper<T> {
+    private T t;
+
+    public void set(T t) {
+        this.t = t;
+    }
+
+    public T get() {
+        return t;
     }
 }
