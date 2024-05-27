@@ -4,25 +4,16 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import org.apache.bookkeeper.bookie.BufferedChannel;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BufferedChannelTest {
@@ -116,7 +107,7 @@ public class BufferedChannelTest {
                             ByteBuffer localBuf = invoc.getArgument(0, ByteBuffer.class);
                             int rem = localBuf.remaining();
                             byte[] dstLocalBuf = new byte[rem];
-                            localBuf.get(dstLocalBuf, localBuf.position(), rem);
+                            localBuf.get(dstLocalBuf, 0, rem);
                             wroteRef.set(dstLocalBuf);
                             return rem;
                         });
@@ -142,8 +133,16 @@ public class BufferedChannelTest {
     }
 
     @Test
-    public void testClearBuf() {
+    public void testClearBuf() throws IOException {
+        byte[] myBuffer = "somebytes".getBytes();
+        ByteBuf buf = getBuffer();
+        buf.writeBytes(myBuffer);
 
+        bufferedChannel.write(buf);
+        assertEquals(myBuffer.length, bufferedChannel.getNumOfBytesInWriteBuffer());
+
+        bufferedChannel.clear();
+        assertEquals(0, bufferedChannel.getNumOfBytesInWriteBuffer());
     }
 
     @Test
