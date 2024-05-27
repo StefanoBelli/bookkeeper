@@ -281,12 +281,14 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
+          <!--  no need to kill if timeout
           <properties>
             <property>
               <name>listener</name>
               <value>org.apache.bookkeeper.common.testing.util.TimedOutTestsListener</value>
             </property>
           </properties>
+          -->
         </configuration>
       </plugin>
       <plugin>
