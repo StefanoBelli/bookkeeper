@@ -1480,13 +1480,11 @@
             <artifactId>pitest-maven</artifactId>
             <configuration>
               <targetClasses>
-                <param>org.apache.bookkeeper.common.allocator.impl.ByteBufAllocatorImpl</param>
                 <param>org.apache.bookkeeper.bookie.BufferedChannel</param>
                 <param>org.apache.bookkeeper.bookie.FileInfo</param>
                 <param>org.apache.bookkeeper.client.RoundRobinDistributionSchedule</param>
               </targetClasses>
               <targetTests>
-                <param>ste.ByteBufAllocatorTest</param>
                 <param>ste.BufferedChannelTest</param>
                 <param>ste.FileInfoTest</param>
                 <param>ste.RoundRobinDistributionScheduleTest</param>
