@@ -1485,9 +1485,9 @@
                 <param>org.apache.bookkeeper.client.RoundRobinDistributionSchedule</param>
               </targetClasses>
               <targetTests>
-                <param>ste.BufferedChannelTest</param>
-                <param>ste.FileInfoTest</param>
-                <param>ste.RoundRobinDistributionScheduleTest</param>
+                <param>org.apache.bookkeeper.bookie.BufferedChannelTest</param>
+                <param>org.apache.bookkeeper.bookie.FileInfoTest</param>
+                <param>org.apache.bookkeeper.client.RoundRobinDistributionScheduleTest</param>
               </targetTests>
             </configuration>
           </plugin>

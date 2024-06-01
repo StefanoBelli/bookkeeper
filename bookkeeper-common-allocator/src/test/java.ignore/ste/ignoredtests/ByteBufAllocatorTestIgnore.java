@@ -1,4 +1,4 @@
-package ste.ignoredtests;
+package org.ignoredtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

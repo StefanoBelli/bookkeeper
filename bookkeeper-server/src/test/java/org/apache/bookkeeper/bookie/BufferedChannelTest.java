@@ -1,8 +1,7 @@
-package ste;
+package org.apache.bookkeeper.bookie;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import org.apache.bookkeeper.bookie.BufferedChannel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +13,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import static org.junit.Assert.*;
+
+// estendi test a casi fallimentari (es write null)
 
 @RunWith(MockitoJUnitRunner.class)
 public class BufferedChannelTest {
