@@ -1433,8 +1433,8 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <argLine>
-                -javaagent:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-0.4.0-all.jar
-                -Xbootclasspath/a:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-0.4.0-all.jar
+                -javaagent:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-${baduaVer}-all.jar
+                -Xbootclasspath/a:${session.executionRootDirectory}/testdeps/ba-dua/ba-dua-agent-rt-${baduaVer}-all.jar
                 -Xmx2G 
                 -Djava.net.preferIPv4Stack=true 
                 -Dio.netty.leakDetection.level=paranoid 
