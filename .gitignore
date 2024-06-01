@@ -53,3 +53,7 @@ build/
 coverage.ser
 dataflow.xml
 ac-reports/
+
+out.xml
+ba-dua.xml
+ba-dua-reports/

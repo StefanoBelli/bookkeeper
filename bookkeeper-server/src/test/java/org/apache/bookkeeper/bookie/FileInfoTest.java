@@ -34,7 +34,13 @@ public class FileInfoTest {
         //avoid failure of @After-annotated method to delete log
         //file after each test
         logFile.mkdirs();
-        logFile.createNewFile();
+        try {
+            logFile.createNewFile();
+        } catch(IOException ioe) {
+            if(!ioe.getMessage().equals("Is a directory")) {
+                throw ioe;
+            }
+        }
     }
 
     @Test

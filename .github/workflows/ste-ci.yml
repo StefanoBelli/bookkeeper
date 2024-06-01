@@ -28,9 +28,7 @@ jobs:
     - name: Copy PIT report
       run: bash ste-ci-scripts/aggacreports.sh
     - name: Build, test and determine data flow coverage
-      run: mvn -P adequacy-dataflow clean test
-    - name: Generate ba-dua report
-      run: bash ste-ci-scripts/genbaduareports.sh
+      run: bash ste-ci-scripts/all-dataflow.sh
     - name: Copy ba-dua report
       run: bash ste-ci-scripts/aggacreports.sh
     - uses: actions/upload-artifact@v4

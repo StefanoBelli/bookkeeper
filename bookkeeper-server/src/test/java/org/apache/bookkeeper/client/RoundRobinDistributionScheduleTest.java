@@ -125,5 +125,5 @@ public class RoundRobinDistributionScheduleTest {
     }
 
     @Test
-    public void dummy() { assertTrue(true); }
+    public void dummy() {rrSched.getEnsembleSet(0);assertTrue(true);}
 }
