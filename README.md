@@ -12,6 +12,20 @@ BaseDir=``./bookkeeper-server/src/main/java``
  * ``org.apache.bookkeeper.bookie.FileInfo``
  * ``org.apache.bookkeeper.client.RoundRobinDistributionSchedule``
 
+### Ba-dua is working
+
+* Ba-dua version: 0.4.0
+* JDK version: 21 (OpenJDK)
+* JRE version: 21 (OpenJDK)
+* JVM version: 21 (OpenJDK)
+* javac compiler version: 21 (OpenJDK)
+* Maven target/source version: 8 (left unchanged)
+* Lots of bookkeeper-\* projects got trimmed/disabled
+  - Except for bookkeeper-server which is the one being tested here
+
+Change java version using ``update-alternatives`` (ubuntu/debian), ``archlinux-java`` (arch), ...
+
+
 # Apache original README.md
 
 <img src="https://pbs.twimg.com/profile_images/545716709311520769/piLLa1iC_400x400.png" alt="logo" style="width: 32px;"/>
