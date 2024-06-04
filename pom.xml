@@ -1481,12 +1481,10 @@
             <configuration>
               <targetClasses>
                 <param>org.apache.bookkeeper.bookie.BufferedChannel</param>
-                <param>org.apache.bookkeeper.client.BookKeeper</param>
                 <param>org.apache.bookkeeper.bookie.FileInfo</param>
               </targetClasses>
               <targetTests>
                 <param>org.apache.bookkeeper.bookie.BufferedChannelTest</param>
-                <param>org.apache.bookkeeper.client.BookKeeperTest</param>
                 <param>org.apache.bookkeeper.bookie.FileInfoTest</param>
               </targetTests>
             </configuration>
