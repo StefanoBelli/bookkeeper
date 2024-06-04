@@ -1480,12 +1480,12 @@
             <artifactId>pitest-maven</artifactId>
             <configuration>
               <targetClasses>
-                <param>org.apache.bookkeeper.bookie.BufferedChannel</param>
                 <param>org.apache.bookkeeper.bookie.FileInfo</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologyImpl</param>
               </targetClasses>
               <targetTests>
-                <param>org.apache.bookkeeper.bookie.BufferedChannelTest</param>
                 <param>org.apache.bookkeeper.bookie.FileInfoTest</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologyTest</param>
               </targetTests>
             </configuration>
           </plugin>

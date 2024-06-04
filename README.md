@@ -8,7 +8,7 @@ Build status below
 
 BaseDir=``./bookkeeper-server/src/main/java``
 
- * ``org.apache.bookkeeper.bookie.BufferedChannel``
+ * ``org.apache.bookkeeper.net.NetworkTopology``
  * ``org.apache.bookkeeper.bookie.FileInfo``
 
 ### Ba-dua is working

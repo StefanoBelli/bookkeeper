@@ -91,7 +91,7 @@
     <Bug pattern="NM_SAME_SIMPLE_NAME_AS_INTERFACE" />
   </Match>
   <Match>
-    <Class name="org.apache.bookkeeper.client.BookKeeper" />
+    <Class name="org.apache.bookkeeper.client.BookKeeperTest" />
     <Bug pattern="NM_SAME_SIMPLE_NAME_AS_INTERFACE" />
   </Match>
   <Match>
