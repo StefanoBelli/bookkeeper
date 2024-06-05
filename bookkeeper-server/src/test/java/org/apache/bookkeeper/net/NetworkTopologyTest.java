@@ -39,9 +39,9 @@ public class NetworkTopologyTest {
         final String singlePath = nodeWithItsArg != null ? nodeWithItsArg.getPath() : null;
 
         if(
-                singleNode != null && singlePath == null ||
-                (singlePath != null &&
-                        singlePath.indexOf("/") == singlePath.lastIndexOf("/"))) {
+                (singleNode != null && singlePath == null) ||
+                (singlePath != null && singlePath.indexOf("/") == singlePath.lastIndexOf("/"))
+        ) {
 
             assertThrows(IllegalArgumentException.class, () -> networkTopology.add(singleNode));
         } else {
