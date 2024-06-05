@@ -1,33 +1,67 @@
 package org.apache.bookkeeper.net;
 
-import org.apache.bookkeeper.net.NetworkTopology;
-import org.apache.bookkeeper.net.NetworkTopologyImpl;
-import org.apache.bookkeeper.net.NodeBase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
+import static org.junit.Assert.*;
+
+@RunWith(Parameterized.class)
 public class NetworkTopologyTest {
 
+    @Parameterized.Parameters
+    public static Iterable<Object[]> params() {
+        return Arrays.asList(new Object[][] {
+                {null},
+                {"/zone-a/region-a/rack-1/node-1"},
+                {"/region-a/rack-1/node-1"},
+                {"/rack-1/node-1"},
+                {"/node-2"},
+                {"/"},
+                {""}
+        });
+    }
+
+    private final String singlePath;
+
+    public NetworkTopologyTest(String singlePath) {
+        this.singlePath = singlePath;
+    }
+
     @Test
-    public void testNetworkTopology() {
+    public void testSingleNodeAdd() {
         NetworkTopologyImpl networkTopology = new NetworkTopologyImpl();
-        Node n = new NodeBase("/base");
-        n.setNetworkLocation("/netloc");
-        networkTopology.add(n);
+        final NodeBase node = singlePath != null ? new NodeBase(singlePath) : null;
 
-        Node k = new NodeBase("/base1");
-        k.setNetworkLocation("/netloc");
-        networkTopology.add(k);
+        if(singlePath != null && singlePath.indexOf("/") == singlePath.lastIndexOf("/")) {
+            assertThrows(IllegalArgumentException.class, () -> networkTopology.add(node));
+        } else {
+            networkTopology.add(node);
+            int expNum = node != null ? 1 : 0;
+            assertEquals(expNum, networkTopology.getNumOfLeaves());
+            assertEquals(expNum, networkTopology.getNumOfRacks());
+            if(singlePath != null) {
+                int lastSlashIdx = singlePath.lastIndexOf("/");
+                assertEquals(node, networkTopology.getNode(singlePath));
+                List<Node> nodesInRack = networkTopology.getDatanodesInRack(
+                        singlePath.substring(0, lastSlashIdx));
+                if(nodesInRack.size() != 1) {
+                    fail();
+                }
+                assertEquals(node, nodesInRack.get(0));
 
-        Node child = new NodeBase("/base2");
-        child.setNetworkLocation("/mynetloc");
-        child.setParent(k);
-        networkTopology.add(child);
-
-        System.out.println(networkTopology.getNumOfLeaves());
-        assertEquals(networkTopology.getNode("/netloc/base"), n);
-        System.out.println(networkTopology.getNumOfRacks());
-        System.out.println(networkTopology.getLeaves("/mynetloc"));
+                int prevEnd = -1;
+                do {
+                    prevEnd = singlePath.indexOf("/", prevEnd + 1);
+                    String path = singlePath.substring(0, prevEnd == -1 ? lastSlashIdx : prevEnd);
+                    Set<Node> nodes = networkTopology.getLeaves(path);
+                    assertTrue(nodes.size() == 1 && nodes.contains(node));
+                } while(prevEnd != lastSlashIdx);
+            }
+        }
     }
 }
