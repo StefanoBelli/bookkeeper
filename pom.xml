@@ -1485,7 +1485,8 @@
               </targetClasses>
               <targetTests>
                 <param>org.apache.bookkeeper.bookie.FileInfoTest</param>
-                <param>org.apache.bookkeeper.net.NetworkTopologyTest</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologySingleNodeAddTest</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologyPrepopulatedNodeAddTest</param>
               </targetTests>
             </configuration>
           </plugin>

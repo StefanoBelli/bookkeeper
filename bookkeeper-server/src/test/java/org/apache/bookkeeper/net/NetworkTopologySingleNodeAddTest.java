@@ -11,7 +11,7 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
-public class NetworkTopologyTest {
+public class NetworkTopologySingleNodeAddTest {
     @Parameterized.Parameters
     public static Iterable<Object[]> params() {
         return Arrays.asList(new Object[][] {
@@ -28,7 +28,7 @@ public class NetworkTopologyTest {
 
     private final NodeWithItsArg nodeWithItsArg;
 
-    public NetworkTopologyTest(NodeWithItsArg nodeWithItsArg) {
+    public NetworkTopologySingleNodeAddTest(NodeWithItsArg nodeWithItsArg) {
         this.nodeWithItsArg = nodeWithItsArg;
     }
 
@@ -50,8 +50,9 @@ public class NetworkTopologyTest {
             assertEquals(expNum, networkTopology.getNumOfLeaves());
             assertEquals(expNum, networkTopology.getNumOfRacks());
             if(singlePath != null) {
-                int lastSlashIdx = singlePath.lastIndexOf("/");
                 assertEquals(singleNode, networkTopology.getNode(singlePath));
+
+                int lastSlashIdx = singlePath.lastIndexOf("/");
                 List<Node> nodesInRack = networkTopology.getDatanodesInRack(
                         singlePath.substring(0, lastSlashIdx));
                 if(nodesInRack.size() != 1) {
@@ -69,6 +70,7 @@ public class NetworkTopologyTest {
             }
         }
     }
+
 
     public static final class NodeWithItsArg {
         private final String path;
