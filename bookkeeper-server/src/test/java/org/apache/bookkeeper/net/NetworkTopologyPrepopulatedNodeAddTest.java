@@ -1,6 +1,5 @@
 package org.apache.bookkeeper.net;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.function.ThrowingRunnable;
 import org.junit.runner.RunWith;
@@ -27,21 +26,15 @@ public class NetworkTopologyPrepopulatedNodeAddTest {
     }
 
     private final ExpectedTestResult expectedTestResult;
-    private final String preExistantNodePath;
     private final String nodePathToAdd;
 
-    private NetworkTopologyImpl networkTopology;
+    private final NetworkTopologyImpl networkTopology;
 
     public NetworkTopologyPrepopulatedNodeAddTest(
             ExpectedTestResult expectedTestResult, String preExistantNodePath, String nodePathToAdd) {
 
         this.expectedTestResult = expectedTestResult;
-        this.preExistantNodePath = preExistantNodePath;
         this.nodePathToAdd = nodePathToAdd;
-    }
-
-    @Before
-    public void populateNetworkTopology() {
         networkTopology = new NetworkTopologyImpl();
         networkTopology.add(new NodeBase(preExistantNodePath));
     }
@@ -59,9 +52,8 @@ public class NetworkTopologyPrepopulatedNodeAddTest {
             assertThrows(NetworkTopologyImpl.InvalidTopologyException.class, addingLambda);
         }
     }
-}
-
-enum ExpectedTestResult {
-    NODE_ADDED,
-    EXCEPTION_THROWN
+    public enum ExpectedTestResult {
+        NODE_ADDED,
+        EXCEPTION_THROWN
+    }
 }

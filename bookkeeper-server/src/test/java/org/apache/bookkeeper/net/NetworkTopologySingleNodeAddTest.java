@@ -71,7 +71,6 @@ public class NetworkTopologySingleNodeAddTest {
         }
     }
 
-
     public static final class NodeWithItsArg {
         private final String path;
         private NodeWithItsArg(String path) {

@@ -1,16 +1,15 @@
 package org.apache.bookkeeper.net;
 
-import kotlin.collections.ArrayDeque;
-import net.bytebuddy.build.HashCodeAndEqualsPlugin;
 import org.apache.bookkeeper.net.common.PopulatedNetworkTopology;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
@@ -24,46 +23,46 @@ public class NetworkTopologySortingTest extends PopulatedNetworkTopology {
         return Arrays.asList(new Object[][]{
                 {
                         Arrays.asList(
+                                new Distanced<>("/america/us/california/paloalto/rack-2/bookie-7",12),
                                 new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-1", 8),
+                                new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",10),
                                 new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-2", 8),
                                 new Distanced<>("/europe/it/lazio/roma/rack-2/bookie-3", 8),
                                 new Distanced<>("/europe/it/lazio/frosinone/rack-1/bookie-4",8),
-                                new Distanced<>("/europe/it/lombardia/milano/rack-1/bookie-5",0),
-                                new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",10),
-                                new Distanced<>("/america/us/california/paloalto/rack-2/bookie-7",12)),
+                                new Distanced<>("/europe/it/lombardia/milano/rack-1/bookie-5",0)),
                         "/europe/it/lombardia/milano/rack-1/bookie-5"
                 },
                 {
                         Arrays.asList(
-                                new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-1", 0),
-                                new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-2", 2),
-                                new Distanced<>("/europe/it/lazio/roma/rack-2/bookie-3", 4),
-                                new Distanced<>("/europe/it/lazio/frosinone/rack-1/bookie-4",6),
                                 new Distanced<>("/europe/it/lombardia/milano/rack-1/bookie-5",8),
                                 new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",10),
+                                new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-2", 2),
+                                new Distanced<>("/europe/it/lazio/roma/rack-2/bookie-3", 4),
+                                new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-1", 0),
+                                new Distanced<>("/europe/it/lazio/frosinone/rack-1/bookie-4",6),
                                 new Distanced<>("/america/us/california/paloalto/rack-2/bookie-7",12)),
                         "/europe/it/lazio/roma/rack-1/bookie-1"
                 },
                 {
                         Arrays.asList(
+                                new Distanced<>("/america/us/california/paloalto/rack-2/bookie-7",12),
                                 new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-1", 2),
                                 new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-2", 2),
                                 new Distanced<>("/europe/it/lazio/roma/rack-2/bookie-3", 0),
-                                new Distanced<>("/europe/it/lazio/frosinone/rack-1/bookie-4",6),
                                 new Distanced<>("/europe/it/lombardia/milano/rack-1/bookie-5",8),
-                                new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",10),
-                                new Distanced<>("/america/us/california/paloalto/rack-2/bookie-7",12)),
+                                new Distanced<>("/europe/it/lazio/frosinone/rack-1/bookie-4",6),
+                                new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",10)),
                         "/europe/it/lazio/roma/rack-2/bookie-3"
                 },
                 {
                         Arrays.asList(
+                                new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",10),
+                                new Distanced<>("/america/us/california/paloalto/rack-2/bookie-7",12),
                                 new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-1", 6),
                                 new Distanced<>("/europe/it/lazio/roma/rack-1/bookie-2", 6),
                                 new Distanced<>("/europe/it/lazio/roma/rack-2/bookie-3", 6),
                                 new Distanced<>("/europe/it/lazio/frosinone/rack-1/bookie-4",0),
-                                new Distanced<>("/europe/it/lombardia/milano/rack-1/bookie-5",8),
-                                new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",10),
-                                new Distanced<>("/america/us/california/paloalto/rack-2/bookie-7",12)),
+                                new Distanced<>("/europe/it/lombardia/milano/rack-1/bookie-5",8)),
                         "/europe/it/lazio/frosinone/rack-1/bookie-4"
                 },
                 {
@@ -95,7 +94,7 @@ public class NetworkTopologySortingTest extends PopulatedNetworkTopology {
                                 new Distanced<>("/europe/it/lazio/roma/rack-2/bookie-3", 10),
                                 new Distanced<>("/europe/it/lazio/frosinone/rack-1/bookie-4",10),
                                 new Distanced<>("/europe/it/lombardia/milano/rack-1/bookie-5",10),
-                                new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",10),
+                                new Distanced<>("/europe/de/region-1/berlino/rack-1/bookie-6",0),
                                 new Distanced<>("/america/us/california/paloalto/rack-2/bookie-7",12)),
                         "/europe/de/region-1/berlino/rack-1/bookie-6"
                 },
@@ -112,16 +111,20 @@ public class NetworkTopologySortingTest extends PopulatedNetworkTopology {
         }
 
         this.expectedSortedOrder.sort(Comparator.comparingInt(nA -> nA.dist));
-    }
-
-    @Before
-    public void copyNodes() {
         System.arraycopy(nodes, 0, nodesToBeSorted, 0, nodesToBeSorted.length);
     }
 
     @Test
     public void testSortingOrder() {
         networkTopology.pseudoSortByDistance(sourceNode, nodesToBeSorted);
+
+        /*
+        for(NodeBase node : nodesToBeSorted) {
+            System.out.println(node);
+        }
+
+        System.out.println("======");
+        */
 
         for(int i = 0; i < expectedSortedOrder.size(); ++i) {
             assertTrue(properSortedCheck(i));
@@ -154,7 +157,6 @@ public class NetworkTopologySortingTest extends PopulatedNetworkTopology {
 
             if(distance != expectedSortedOrder.get(j).dist) {
                 if(alreadyChangedDirection) {
-                    System.out.println(expectedSortedOrder.get(j).dist + " "+ nodesToBeSorted[index]);
                     return false;
                 }
                 alreadyChangedDirection = true;
