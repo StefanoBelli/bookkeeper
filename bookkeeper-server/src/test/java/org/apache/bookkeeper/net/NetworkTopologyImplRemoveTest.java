@@ -14,7 +14,7 @@ public final class NetworkTopologyImplRemoveTest {
 
     public enum ExpectedResult {
         NO_ADD_SO_NO_CHANGES,
-       PREVIOUSLY_ADDED_NODE_REMOVED
+        PREVIOUSLY_ADDED_NODE_REMOVED
     }
 
     private final ExpectedResult expectedResult;
