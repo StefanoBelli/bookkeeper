@@ -37,13 +37,18 @@ public final class NetworkTopologyImplAddTest {
     @Test
     public void testAdd() {
         NetworkTopologyImpl sut = new NetworkTopologyImpl();
+
+        assertNull(node != null ? Common.getMyNode(sut, node) : null);
+        assertEquals(0, sut.getNumOfRacks());
+        assertEquals(0, sut.getNumOfLeaves());
+
         if(expectedResult == ExpectedResult.EXCEPTION_THROWN) {
             assertThrows(IllegalArgumentException.class, () -> sut.add(node));
         } else {
             sut.add(node);
         }
 
-        Node gotNode = node != null ? sut.getNode(node.getNetworkLocation() + "/" + node.getName()) : null;
+        Node gotNode = node != null ? Common.getMyNode(sut, node) : null;
         int numOfRacks = sut.getNumOfRacks();
         int numOfLeaves = sut.getNumOfLeaves();
 
