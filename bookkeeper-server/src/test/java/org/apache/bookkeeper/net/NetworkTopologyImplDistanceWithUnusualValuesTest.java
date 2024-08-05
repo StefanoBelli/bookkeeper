@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public final class NetworkTopologyImplDistanceWithInusualValuesTest extends Common.PopulatedNetworkTopology {
+public final class NetworkTopologyImplDistanceWithUnusualValuesTest extends Common.PopulatedNetworkTopology {
     public interface NodeBuilder {
         Node build(String path);
     }
@@ -62,7 +62,7 @@ public final class NetworkTopologyImplDistanceWithInusualValuesTest extends Comm
         });
     }
 
-    public NetworkTopologyImplDistanceWithInusualValuesTest(int expectedDistance, String nodeAPath, String nodeBPath,
+    public NetworkTopologyImplDistanceWithUnusualValuesTest(int expectedDistance, String nodeAPath, String nodeBPath,
                                                             NodeBuilder nodeABuilder, NodeBuilder nodeBBuilder) {
         this.expectedDistance = expectedDistance;
         this.nodeA = nodeABuilder.build(nodeAPath);
