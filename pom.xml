@@ -1486,6 +1486,11 @@
               <targetTests>
                 <param>org.apache.bookkeeper.net.NetworkTopologyImplAddTest</param>
                 <param>org.apache.bookkeeper.net.NetworkTopologyImplRemoveTest</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologyImplDistanceTest</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologyImplSortingTest</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologyImplPrepopulatedAddTest</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologyImplDistanceWithUnusualValuesTest</param>
+                <param>org.apache.bookkeeper.net.NetworkTopologyImplSortingWithUnusualValuesTest</param>
               </targetTests>
             </configuration>
           </plugin>
