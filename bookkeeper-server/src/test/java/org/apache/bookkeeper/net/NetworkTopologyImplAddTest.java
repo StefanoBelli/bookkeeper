@@ -17,11 +17,11 @@ public final class NetworkTopologyImplAddTest {
     }
 
     private final ExpectedResult expectedResult;
-    private final Node node;
+    private final Node nodeToAdd;
 
-    public NetworkTopologyImplAddTest(ExpectedResult expectedResult, Node node) {
+    public NetworkTopologyImplAddTest(ExpectedResult expectedResult, Node nodeToAdd) {
         this.expectedResult = expectedResult;
-        this.node = node;
+        this.nodeToAdd = nodeToAdd;
     }
 
     @Parameterized.Parameters
@@ -38,27 +38,29 @@ public final class NetworkTopologyImplAddTest {
     public void testAdd() {
         NetworkTopologyImpl sut = new NetworkTopologyImpl();
 
-        assertNull(node != null ? Common.getMyNode(sut, node) : null);
+        assertNull(nodeToAdd != null ? Common.getMyNode(sut, nodeToAdd) : null);
         assertEquals(0, sut.getNumOfRacks());
         assertEquals(0, sut.getNumOfLeaves());
 
         if(expectedResult == ExpectedResult.EXCEPTION_THROWN) {
-            assertThrows(IllegalArgumentException.class, () -> sut.add(node));
+            assertThrows(IllegalArgumentException.class, () -> sut.add(nodeToAdd));
         } else {
-            sut.add(node);
+            sut.add(nodeToAdd);
         }
 
-        Node gotNode = node != null ? Common.getMyNode(sut, node) : null;
+        Node gotNode = nodeToAdd != null ? Common.getMyNode(sut, nodeToAdd) : null;
         int numOfRacks = sut.getNumOfRacks();
         int numOfLeaves = sut.getNumOfLeaves();
 
         if(expectedResult == ExpectedResult.NO_CHANGES || expectedResult == ExpectedResult.EXCEPTION_THROWN) {
-            assertNull(gotNode);
+            if(nodeToAdd != null) {
+                assertNotEquals(nodeToAdd, gotNode);
+            }
             assertEquals(0, numOfRacks);
             assertEquals(0, numOfLeaves);
         } else {
             assertNotNull(gotNode);
-            assertEquals(node, gotNode);
+            assertEquals(nodeToAdd, gotNode);
             assertEquals(1, numOfRacks);
             assertEquals(1, numOfLeaves);
         }
