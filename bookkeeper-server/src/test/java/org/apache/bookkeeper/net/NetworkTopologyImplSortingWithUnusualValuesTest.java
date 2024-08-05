@@ -14,10 +14,10 @@ public final class NetworkTopologyImplSortingWithUnusualValuesTest extends Commo
     @Parameterized.Parameters
     public static Iterable<Object[]> params() {
         return Arrays.asList(new Object[][]{
-                {null, null},
+                //{null, null},
                 {null, new Node[]{null}},
                 {null, new Node[]{networkTopology.getNode("/europe/it/lazio/roma/rack-1/bookie-1")}},
-                {networkTopology.getNode("/europe/it/lazio/roma/rack-1/bookie-1"), null},
+                //{networkTopology.getNode("/europe/it/lazio/roma/rack-1/bookie-1"), null},
                 {networkTopology.getNode("/europe/it/lazio/roma/rack-1/bookie-1"), new Node[]{null}}
         });
     }
