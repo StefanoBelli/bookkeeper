@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public final class BufferedChannelWriteTest extends BufferedChannelWithMockedFileChannel {
     public BufferedChannelWriteTest() throws IOException {}
 
@@ -34,18 +33,9 @@ public final class BufferedChannelWriteTest extends BufferedChannelWithMockedFil
 
     @Test
     public void testNonEmptyWriteBuffer() throws IOException {
-        String data = "random data";
-        ByteBuf buf = allocBuf(data);
+        String[] data = { "random data" };
 
-        sut.write(buf);
-
-        assertEquals(data.length(), sut.position());
-        assertEquals(data.length(), sut.getNumOfBytesInWriteBuffer());
-
-        ByteBuf destBuf = allocBuf();
-
-        sut.read(destBuf, 0, data.length());
-        assertEquals(data, bufContentToString(data.length(), destBuf));
+        consecutiveWrites(data);
     }
 
     @Test

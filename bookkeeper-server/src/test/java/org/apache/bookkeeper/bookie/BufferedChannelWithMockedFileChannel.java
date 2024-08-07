@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 
 public class BufferedChannelWithMockedFileChannel {
-    private final ByteBufAllocator bufAllocator = ByteBufAllocator.DEFAULT;
+    private static final ByteBufAllocator bufAllocator = ByteBufAllocator.DEFAULT;
     protected final FileChannel fileChannel = Mockito.mock(FileChannel.class);
     protected final BufferedChannel sut;
     protected final int capacity;
@@ -23,7 +23,7 @@ public class BufferedChannelWithMockedFileChannel {
         this(100);
     }
 
-    protected ByteBuf allocBuf(String data) {
+    protected static ByteBuf allocBuf(String data) {
         byte[] b = data.getBytes(StandardCharsets.UTF_8);
         ByteBuf buf = bufAllocator.buffer();
         buf.writeBytes(b);
@@ -31,11 +31,11 @@ public class BufferedChannelWithMockedFileChannel {
         return buf;
     }
 
-    protected ByteBuf allocBuf() {
+    protected static ByteBuf allocBuf() {
         return bufAllocator.buffer();
     }
 
-    protected String bufContentToString(int size, ByteBuf buf) {
+    protected static String bufContentToString(int size, ByteBuf buf) {
         byte[] b = new byte[size];
         buf.getBytes(0, b);
 
