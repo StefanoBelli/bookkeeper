@@ -6,7 +6,7 @@ Build status below
 
 ## Tested classes
 
-BaseDir=``./bookkeeper-server/src/main/java``
+BaseDir=``./bookkeeper-server/src/test/java``
 
  * ``org.apache.bookkeeper.net.NetworkTopologyImpl``
  * ``org.apache.bookkeeper.bookie.BufferedChannel``
