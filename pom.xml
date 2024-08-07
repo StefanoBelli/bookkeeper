@@ -1480,7 +1480,7 @@
             <artifactId>pitest-maven</artifactId>
             <configuration>
               <targetClasses>
-                <param>org.apache.bookkeeper.bookie.FileInfo</param>
+                <param>org.apache.bookkeeper.bookie.BufferedChannel</param>
                 <param>org.apache.bookkeeper.net.NetworkTopologyImpl</param>
               </targetClasses>
               <targetTests>
@@ -1491,6 +1491,8 @@
                 <param>org.apache.bookkeeper.net.NetworkTopologyImplPrepopulatedAddTest</param>
                 <param>org.apache.bookkeeper.net.NetworkTopologyImplDistanceWithUnusualValuesTest</param>
                 <param>org.apache.bookkeeper.net.NetworkTopologyImplSortingWithUnusualValuesTest</param>
+                <param>org.apache.bookkeeper.bookie.BufferedChannelReadTest</param>
+                <param>org.apache.bookkeeper.bookie.BufferedChannelWriteTest</param>
               </targetTests>
             </configuration>
           </plugin>

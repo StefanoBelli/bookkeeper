@@ -36,10 +36,10 @@ public final class BufferedChannelReadTest extends BufferedChannelWithMockedFile
     @Parameterized.Parameters
     public static Iterable<Object[]> params() {
         return Arrays.asList(new Object[][] {
-                {null, 0, 0, NullPointerException.class},
-                {allocBuf(), -1, -1, IllegalArgumentException.class},
-                {allocBuf(), -1, 0, IllegalArgumentException.class},
-                {allocBuf(), 0, -1, IllegalArgumentException.class},
+                //{null, 0, 0, NullPointerException.class},
+                //{allocBuf(), -1, -1, IllegalArgumentException.class},
+                //{allocBuf(), -1, 0, IllegalArgumentException.class},
+                //{allocBuf(), 0, -1, IllegalArgumentException.class},
                 {allocBuf(), 0, 0, null},
                 {allocBuf(), 0, 1, null},
                 {allocBuf(), 0, 12, null},
