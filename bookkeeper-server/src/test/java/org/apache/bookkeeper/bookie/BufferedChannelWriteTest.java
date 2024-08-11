@@ -3,12 +3,11 @@ package org.apache.bookkeeper.bookie;
 import io.netty.buffer.ByteBuf;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public final class BufferedChannelWriteTest extends BufferedChannelWithMockedFileChannel {
     public BufferedChannelWriteTest() throws IOException {}
