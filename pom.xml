@@ -1493,6 +1493,7 @@
                 <param>org.apache.bookkeeper.net.NetworkTopologyImplSortingWithUnusualValuesTest</param>
                 <param>org.apache.bookkeeper.bookie.BufferedChannelReadTest</param>
                 <param>org.apache.bookkeeper.bookie.BufferedChannelWriteTest</param>
+                <param>org.apache.bookkeeper.bookie.BufferedChannelWriteFlushingTest</param>
               </targetTests>
             </configuration>
           </plugin>

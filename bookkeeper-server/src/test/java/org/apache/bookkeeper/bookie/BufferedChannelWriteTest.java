@@ -76,14 +76,4 @@ public final class BufferedChannelWriteTest extends BufferedChannelWithMockedFil
 
         assertEquals(concatArray(datas), bufContentToString(prevWritePos, wholeBuf));
     }
-
-    private static String concatArray(String[] strs) {
-        StringBuilder builder = new StringBuilder();
-
-        for(final String str : strs) {
-            builder.append(str);
-        }
-
-        return builder.toString();
-    }
 }

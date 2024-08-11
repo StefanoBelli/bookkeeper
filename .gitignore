@@ -57,3 +57,5 @@ ac-reports/
 out.xml
 ba-dua.xml
 ba-dua-reports/
+
+IgnoreThisTest.java
