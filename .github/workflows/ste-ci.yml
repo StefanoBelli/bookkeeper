@@ -34,6 +34,8 @@ jobs:
       run: bash ste-ci-scripts/aggacreports.sh
     - name: Run integration tests
       run: mvn -DskipUnitTests=true clean verify
+    - name: Copy maven failsafe plugin report
+      run: bash ste-ci-scripts/aggacreports.sh
     - uses: actions/upload-artifact@v4
       with:
         name: adequacy-reports
