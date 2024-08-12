@@ -8,6 +8,6 @@ cp $TESTED_SUBPROJECT/target/pit-reports ac-reports -rv
 
 cp $TESTED_SUBPROJECT/target/site/jacoco ac-reports -rv
 
-cp $TESTED_SUBPROJECT/target/failsafe-reports/failsafe-summary.xml ac-reports -rv
+cp $TESTED_SUBPROJECT/target/failsafe-reports ac-reports -rv
 
 exit 0
