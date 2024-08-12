@@ -32,6 +32,8 @@ jobs:
       run: bash ste-ci-scripts/all-dataflow.sh
     - name: Copy ba-dua report
       run: bash ste-ci-scripts/aggacreports.sh
+    - name: Run integration tests
+      run: mvn -DskipUnitTests=true clean verify
     - uses: actions/upload-artifact@v4
       with:
         name: adequacy-reports
