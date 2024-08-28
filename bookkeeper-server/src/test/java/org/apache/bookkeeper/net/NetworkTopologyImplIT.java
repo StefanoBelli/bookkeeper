@@ -32,6 +32,7 @@ public final class NetworkTopologyImplIT extends Common.PopulatedNetworkTopology
         Node nonExistingNode = Common.buildNode("/europe/it/lazio/roma/rack-1","bookie-14");
 
         return Arrays.asList(new Object[][] {
+                //{null, null, ExpectedResult.IAE},
                 //{null, nodes[0], ExpectedResult.IAE},
                 //{nodes[0], null, ExpectedResult.IAE},
                 //{nonExistingNode, nodes[0], ExpectedResult.IAE},
