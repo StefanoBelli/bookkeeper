@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @RunWith(Parameterized.class)
-public final class BookKeeperTest extends BookKeeperClusterTestCase {
+public final class BookKeeperIT extends BookKeeperClusterTestCase {
 
     @Parameterized.Parameters
     public static Iterable<Object[]> params() {
@@ -19,14 +19,12 @@ public final class BookKeeperTest extends BookKeeperClusterTestCase {
         });
     }
 
-    public BookKeeperTest(int numBookies) {
+    public BookKeeperIT(int numBookies) {
         super(numBookies);
     }
 
     @Test
     public void test() throws BKException, IOException, InterruptedException {
-        ClientConfiguration conf = new ClientConfiguration();
-        conf.setMetadataServiceUri(zkUtil.getMetadataServiceUri());
-        BookKeeper bkc = new BookKeeper(conf);
+
     }
 }
